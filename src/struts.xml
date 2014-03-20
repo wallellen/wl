@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="GBK" />
+	<package name="mains" extends="struts-default">
+	<interceptors>
+	<interceptor name="modify" class="modifyInterceptor"></interceptor>
+	
+	<interceptor name="userManager" class="userManagerInterceptor"></interceptor>
+	<interceptor name="search" class="searchInterceptor"></interceptor>
+	
+	
+	</interceptors>
+	<global-results>
+		<result name="login">login.jsp</result>
+		<result name="error">error.jsp</result>
+		<result name="notfind">notfind.jsp</result>
+		<result name="exist">/exist.jsp</result>
+		<result name="none">error.jsp</result>
+	</global-results>
+	
+
+	
+	<action name="login" class="userAction">
+	<result name="sucess">index.html</result>
+	<result name="fail">/login.jsp</result>
+	
+	</action>
+	<action name="logOut" class="userAction">
+		<result name="logout">/login.jsp</result>
+	
+	</action>
+	
+	<action name="unitDocumentManager" class="unitDocumentAction">
+		<result name="sucess">/document/addElectricUnitDocument.jsp</result>
+		<result name="init">/document/modifyunitducument.jsp</result>
+		<result name="detial">/document/unitDocumentDetial.jsp</result>
+		<result name="modify_sucess">/document/searchunitdocument.jsp</result>
+		<result name="uploadinit">/document/addElectricUnitDocument.jsp</result>
+				<interceptor-ref name="modify"/>
+		<!--  <interceptor-ref name="userManager"/>-->
+		<interceptor-ref name="defaultStack"/>
+		
+	</action>
+	<action name="unitDocumentSearch" class="unitDocumentAction">
+		<result name ="done">/document/searchunitdocument.jsp</result>		
+		<result name="sucess">/document/searchunitdocument.jsp</result>
+		<result name="detial">/document/unitDocumentDetial.jsp</result>
+		<result name="detailforsearch">/document/unitdocumentdetailforsearch.jsp</result>
+		<interceptor-ref name="search"/>
+		<interceptor-ref name="defaultStack"/>
+		
+	</action>
+	<action name="personalDocumentSearch" class="personalDocumentAction">
+		<result name="done">/document/searchpersonaldocument.jsp</result>
+		<result name="sucess">/document/searchpersonaldocument.jsp</result>
+		<result name="detial">/document/personalDocumentDetial.jsp</result>
+		<result name="detailforsearch">/document/personaldocumentdetailforsearch.jsp</result>
+		<interceptor-ref name="search"/>
+		<interceptor-ref name="defaultStack"/>
+	</action>
+	
+	
+	<action name="personalDocumentManager" class="personalDocumentAction">
+		<result name="sucess">/document/addelectricpersonaldocument.jsp</result>
+		<result name="modify_sucess">/document/modifypersonaldocument.jsp</result>
+		<result name="init">/document/modifypersonaldocument.jsp</result>
+		<result name="detial">/document/personalDocumentDetial.jsp</result>
+		<result name="uploadinit">/document/addelectricpersonaldocument.jsp</result>
+		<interceptor-ref name="modify"/>
+		<!--  <interceptor-ref name="userManager"/>-->
+		<interceptor-ref name="defaultStack"/>
+	</action>
+	
+	
+	<action name="electricDocumentManager" class="electricDocumentAction">
+	<param name="savePath">D:\360data\重要数据\桌面\武侯档案</param>
+		<result name="check_sucess_personal">/document/personaldocumentimg.jsp</result>
+		<result name="check_sucess_unit">/document/unitdocumentimg.jsp</result>
+		<result name="check_sucess_document">/document/documentimg.jsp</result>
+		<interceptor-ref name="search"/>
+		<!--  <interceptor-ref name="userManager"/> -->
+		<interceptor-ref name="defaultStack"/>
+	</action>
+	
+	<action name="deleteElectricDocumentManager" class="electricDocumentAction">
+	<param name="savePath">D:\360data\重要数据\桌面\武侯档案</param>
+		<result name="delete_unit_sucess">/document/searchunitdocument.jsp</result>
+		<result name="delete_personal_sucess">/document/searchpersonaldocument.jsp</result>
+		<result name="delete_document_sucess">/document/searchdocument.jsp</result>
+		<interceptor-ref name="modify"/>
+		<!--  <interceptor-ref name="userManager"/> -->
+		<interceptor-ref name="defaultStack"/>
+	</action>
+	
+	
+	<action name="upload" class="electricDocumentAction">
+		<param name="savePath">D:\360data\重要数据\桌面\武侯档案</param>
+		<result name="unit_add_sucess">/document/addElectricUnitDocument.jsp</result>
+		<result name="personal_add_sucess">/document/addelectricpersonaldocument.jsp</result>
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes"></param>
+				<param name="maximumSize">200000000</param>
+			</interceptor-ref>
+		<interceptor-ref name="modify"/>
+	<!--  	<interceptor-ref name="userManager"/> -->
+		<interceptor-ref name="defaultStack"/>
+		</action>
+	<action name="excel" class="electricDocumentAction">
+	<result name="download_excel">/excel.jsp</result>
+	
+	</action>
+	
+	
+	<action name="user" class="userAction">
+		<result name="sucess">/user/adduser.jsp</result>
+		<result name="fail">/user/adduser.jsp</result>
+		<result name="findsucess">/user/usermanager.jsp</result>
+		<result name="findfail">/user/usermanager.jsp</result>
+		<result name="modifysucess">/user/usermanager.jsp</result>
+		<result name="deletesucess">/user/usermanager.jsp</result>
+		<interceptor-ref name="userManager"/>
+		<interceptor-ref name="defaultStack"/>
+	</action>
+	
+	
+	<action name="document" class="documentAction">
+		<result name="sucess">/document/addelectricdocument.jsp</result>
+		<result name="initadd">/document/addDocument.jsp</result>
+		<result name="exist">/document/existerror.jsp</result>
+		<result name="findsucess">/document/searchdocument.jsp</result>
+		<result name="findfail">/document/addDocument.jsp</result>
+		<result name="archivenotfind">/archive/notfinderror.jsp</result>
+		<result name="initModify">/document/modifyDocument.jsp</result>
+		<result name="modifysucess">/document/modifyDocument.jsp</result>
+		<result name="deletesucess">/document/searchdocument.jsp</result>
+		<result name="detail">/document/documentdetail.jsp</result>
+		<result name="initupload">/document/uploadelectricdocument.jsp</result>
+		<result name="initsearch">/document/searchdocument.jsp</result>
+		<interceptor-ref name="modify"/>
+		<interceptor-ref name="defaultStack"/>
+	</action>
+	
+	<action name="searchDocument" class="documentAction">
+		<result name="findsucess">/document/searchdocument.jsp</result>
+		<result name="notfind">/document/searchdocument.jsp</result>
+		<result name="detail">/document/documentdetail.jsp</result>
+		<result name="detailforsearch">/document/documentdetailforsearch.jsp</result>
+		<interceptor-ref name="search"/>
+		<interceptor-ref name="defaultStack"/>
+	</action>
+	
+	<action name="archive" class="archiveAction">
+		<result name="sucess">/archive/addarchive.jsp</result>
+		<result name="exist">/archive/existerror.jsp</result>
+		<result name="findsucess">/archive/addarchive.jsp</result>
+		<result name="findfail">/archive/addarchive.jsp</result>
+		<result name="notfind">/archive/notfinderror.jsp</result>
+		<result name="initModify">/archive/modifyarchive.jsp</result>
+		<result name="modifysucess">/archive/modifyarchive.jsp</result>
+		<result name="modifyfail">/archive/error.jsp</result>
+		<result name="deletesucess">/archive/searcharchive.jsp</result>
+		<result name="deletefail">/archive/error.jsp</result>
+		<interceptor-ref name="modify"/>
+		<interceptor-ref name="defaultStack"/>
+	</action>
+	
+	<action name="searchArchive" class="archiveAction">
+		<result name ="done">/archive/searcharchive.jsp</result>		
+		<result name="sucess">/archive/searcharchive.jsp</result>
+		<result name="detail">/archive/archivedetail.jsp</result>
+		<result name="detailforsearch">/archive/archivedetailforsearch.jsp</result>
+		<interceptor-ref name="search"/>
+		<interceptor-ref name="defaultStack"/>
+		
+	</action>
+	
+	</package>
+</struts>    
